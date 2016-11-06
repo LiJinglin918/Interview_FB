@@ -1,3 +1,4 @@
+// 变种：不知道一共多少版本
 /*
 You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
 Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad.
@@ -23,4 +24,30 @@ public class Solution extends VersionControl {
             return low;
         return 0;
     }
+}
+
+
+// 变种是如果不知道一共有多少版本的情况下应该怎么找。 Unknow numbr of version
+public int badVersion {
+    int prev = 0;
+    int cur = 0;
+    while (isBadVersioin(cur)) {
+        prev = cur;
+        cur = cur * cur;
+    }
+    int start = prev;
+    int end = cur;
+    while (start + 1 < end) {
+        int mid = start + (end - start) / 2;
+        if (isBadVersioin(mid)) {
+            end = mid;
+        }
+        else {
+            start = mid;
+        }
+    }
+    if (isBadVersioin(start)) {
+        return start;
+    }
+    return end;
 }
