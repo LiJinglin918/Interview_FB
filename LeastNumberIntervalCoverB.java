@@ -13,41 +13,68 @@ Given A=[[0,3],[4,7]] B=[0,6] return 0 since we cannot find any interval combina
 
 // time complexity: O(nlgn)
 
-class MinimumCoverInterval {
-    public int findCover(Interval[] intervals, Interval interval) {
-        Arrays.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval inter1, Interval inter2) {
-                if (inter1.start == inter2.start) {
-                    return inter1.end - inter2.end;
-                }
-                return inter1.start - inter2.start;
-            }
-        });
-        int count = 0;
-        int start = interval.start;
-        int end = -1;
-        int index = 0;
-        while (index < intervals.length && end < interval.end) {
-            if (intervals[index].end <= start) {
-                index++;
-                continue;
-            }
-            if (intervals[index].start > start) {
-                break;
-            }
-            while (index < intervals.length && end < interval.end && intervals[index].start <= start) {
-                end = Math.max(intervals[index].end, end);
-                index++;
-            }
-            if (start != end) {
-                count++;
-                start = end;
-            }
-        }
-        if (end < interval.end) {
-            return 0;
-        }
-        return count;
-    }
+/**
+ * 1. sort the interval array, according to the start. If start is same, sort the array according to its end
+ * 2. use a pointer "i" to traverse the interval array. 
+ * 3. if "the intervals at the position i" (intervals[i]) 's end <= interval.start, i++
+ * 4. If .................................................'s start > interval.start, means the rest of the interval array are not candidates. break
+ * 5. Use a variable "end" to store the max of the intervals's end
+ * 6. When a start != end, res++ . Update the start
+ * 7. time complexity: O(nlgn)
+ */
+
+import java.util.*;
+
+public class LeastIntervalCoverB {
+	public int findCover(Interval[] intervals, Interval interval) {
+		int res = 0;
+		
+		// sort the intervals array
+		Arrays.sort(intervals, new Comparator<Interval>() {
+			public int compare(Interval inter1, Interval inter2) {
+				if (inter1.start == inter2.start)
+					return inter1.end - inter2.end;
+				return inter1.start - inter2.start;
+			}
+		});
+		
+		int start = interval.start;
+		int end = -1;
+		int i = 0;
+		
+		// traverse the intervals array
+		while (i < intervals.length && end < interval.end) {
+			if (intervals[i].end <= start) {
+				i++;
+				continue;
+			}
+			if (intervals[i].start > start) {
+				break;
+			}
+			
+			// use variable "end" to be the greatest end number in the interval array. (Update)
+			while (i < intervals.length && end < interval.end && intervals[i].start <= start) {
+				end = Math.max(intervals[i].end, end);
+				i++;
+			}
+			
+			// if start != end. res++. Update the start
+			if (start != end) {
+				res++;
+				start = end;
+			}
+		}
+		if (end < interval.end) {
+			return 0;
+		}
+		return res;
+	}
+	public class Interval {
+		int start;
+		int end;
+		Interval(int x, int y) {
+			start = x;
+			end = y;
+		}
+	}
 }
