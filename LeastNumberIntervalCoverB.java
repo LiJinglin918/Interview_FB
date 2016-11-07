@@ -13,6 +13,14 @@ Given A=[[0,3],[4,7]] B=[0,6] return 0 since we cannot find any interval combina
 
 // time complexity: O(nlgn)
 
+
+
+
+
+
+
+
+
 /**
  * 1. sort the interval array, according to the start. If start is same, sort the array according to its end
  * 2. use a pointer "i" to traverse the interval array. 
