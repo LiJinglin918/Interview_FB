@@ -4,6 +4,21 @@ input could include ":(" frown or ":)" smileys
 check if the input is parenthese balance
 */
 
+
+
+
+
+
+
+/**
+ * 1. use variable to store the number of parentheses, 
+ * 2. use variable to store number of smile and frown emotion
+ * 3. use a boolean variable to check whether it could be a emotion.
+ * 4. Finally calculate the left and right parentheses. 
+ * @author Administrator
+ *
+ */
+
 class CheckBalanced {
     public boolean check(String message) {
         int closeParenth = 0;
