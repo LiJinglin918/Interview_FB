@@ -53,25 +53,55 @@ For example, Given [[0, 30],[5, 10],[15, 20]], return 2.
 这里还有一个技巧，如果我们把这些房间当作List来管理，每次查询需要O(N)时间，如果我们用堆来管理，可以用logN时间找到时间最早结束的房间。
 */
 
-public class Solution {
-    public int minMeetingRooms(Interval[] intervals) {
-        if(intervals == null || intervals.length == 0) return 0;
-        Arrays.sort(intervals, new Comparator<Interval>(){
-            public int compare(Interval i1, Interval i2){
-                return i1.start - i2.start;
-            }
-        });
-        // 用堆来管理房间的结束时间
-        PriorityQueue<Integer> endTimes = new PriorityQueue<Integer>();
-        endTimes.offer(intervals[0].end);
-        for(int i = 1; i < intervals.length; i++){
-            // 如果当前时间段的开始时间大于最早结束的时间，则可以更新这个最早的结束时间为当前时间段的结束时间，如果小于的话，就加入一个新的结束时间，表示新的房间
-            if(intervals[i].start >= endTimes.peek()){
-                endTimes.poll();
-            }
-            endTimes.offer(intervals[i].end);
-        }
-        // 有多少结束时间就有多少房间
-        return endTimes.size();
-    }
+
+
+
+
+
+/*
+ * 1. sort the intervals according to the start
+ * 2. use priorityQueue to store the end times of the intervals
+ * 3. If the current end time greater than the earliest end time (pq.peek())
+ * update the earliest time (pq.poll()). 
+ * 4. If smaller, 表示需要新的房间，则加入PQ, （因为最后记录pq.size()为房间数）
+ */
+
+import java.util.*;
+
+public class MeetingRoomsII {
+	public int minMeetingRooms(Interval[] intervals) {
+		if (intervals == null || intervals.length == 0)
+			return 0;
+		Arrays.sort(intervals, new Comparator<Interval>() {
+			public int compare(Interval o1, Interval o2) {
+				return o1.start - o2.start;
+			}
+		});
+		
+		// Use the PriorityQueue to store the end times of the intervals
+		PriorityQueue<Integer> endTime = new PriorityQueue<>();
+		endTime.add(intervals[0].end);
+		
+		for (int i = 1; i < intervals.length; i++) {
+			
+			// If the current end time >= previous earliest end time, update
+			if (intervals[i].start >= endTime.peek()) {
+				endTime.poll();
+			}
+			endTime.add(intervals[i].end);
+		}
+		
+		// pq.size() is the number of rooms needed. 
+		return endTime.size();
+	}
+	
+	public class Interval {
+		int start;
+		int end;
+		Interval(int s, int e) {
+			start = s;
+			end = e;
+		}
+	}
 }
+
