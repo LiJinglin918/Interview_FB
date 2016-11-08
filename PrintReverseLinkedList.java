@@ -6,32 +6,54 @@
 'Time complexity: O(nlgn) space complexity: O(lgn)'
 */
 
-class ReversePrint {
-    public void print(ListNode head) {
-        ListNode mover = head;
-        int length = 0;
-        while (mover != null) {
-            mover = mover.next;
-            length++;
-        }
-        helper(head, length);
-    }
 
-    private void helper(ListNode head, int length) {
-        if (head == null) {
-            return;
-        }
-        if (length == 1) {
-            System.out.println(head.val);
-            return;
-        }
-        int count = 0;
-        ListNode mover = head;
-        while (count < length / 2) {
-            mover = mover.next;
-            count++;
-        }
-        helper(mover, length - length / 2);
-        helper(head, length / 2);
-    }
+
+
+
+
+
+/*
+ * 1. binary reverse
+ * 2. in the helper method, find the middle node
+ * 3. recursively reverse the first and second parts. 
+ */
+public class PrintReverseLinkedList {
+	public void print(ListNode head) {
+		ListNode mover = head;
+		int length = 0;
+		while (mover != null) {
+			mover = mover.next;
+			length++;
+		}
+		helper(head, length);
+	}
+	public void helper(ListNode head, int length) {
+		if (head == null)
+			return;
+		
+		// the basis condition
+		if (length == 1) {
+			System.out.println(head.val);
+			return;
+		}
+		int count = 0;
+		ListNode mover = head;
+		
+		// find the middle node
+		while (count < length / 2) {
+			mover = mover.next;
+			count++;
+		}
+		
+		// recursively reverse the left and right parts
+		helper(mover, length - length / 2);
+		helper(head, length / 2);
+	}
+	public class ListNode {
+		int val;
+		ListNode next;
+		ListNode (int x) {
+			val = x;
+		}
+	}
 }
