@@ -1,6 +1,6 @@
-// 
-82. WalkMatrix
-/* 一个矩阵斜着走的list例子如下：
+/*
+82. WalkMatrix          打印斜着走的array[][] 
+一个矩阵斜着走的list例子如下：
 123
 456
 789
