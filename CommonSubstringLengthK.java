@@ -9,22 +9,37 @@ find whether there is common substring whose length >= k
 // So when we traverse the array, if A.charAt(indexA) == B.charAt(indexB)
 // Then array[indexA][indexB] = array[indexA - 1][indexB - 1] + 1
 
-class hasCommonSubstring {
-    public boolean hasCommonThanK(String A, String B, int k) {
-        if (k <= 1) {
-            return true;
-        }
-        int[][] common = new int[A.length() + 1][B.length() + 1];
-        for (int indexA = 1; indexA <= A.length(); indexA++) {
-            for (int indexB = 1; indexB <= B.length(); indexB++) {
-                if (A.charAt(indexA - 1) == B.charAt(indexB - 1)) {
-                    common[indexA][indexB] = common[indexA - 1][indexB - 1] + 1;
-                }
-                if (common[indexA][indexB] >= k) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+
+
+
+
+
+
+
+
+
+
+/*
+ * 找两个字符串是否有相同的substring长度大于k (boolean)
+ * 1. Use dp method. Use a 2d array common[][]
+ * 2. common[][] to record the length of the substring.
+ * 3. Then traverse the array, if char in two arrays are same, dp[i][j] = dp[i - 1][j - 1] + 1.
+ */
+
+public class CommonSubstringLength {
+	public boolean hasCommonThanK (String A, String B, int k) {
+		if (k <= 1)
+			return true;
+		int[][] common = new int[A.length() + 1][B.length() + 1];
+		for (int i = 1; i < A.length(); i++) {
+			for (int j = 1; j <= B.length(); j++) {
+				if (A.charAt(i - 1) == B.charAt(j - 1)) {
+					common[i][j] = common[i - 1][j - 1] + 1;
+				}
+				if (common[i][j] >= k)
+					return true;
+			}
+		}
+		return false;
+	}
 }
