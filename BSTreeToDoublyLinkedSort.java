@@ -1,7 +1,7 @@
 // 47. BST to Doubly LinkedList
 // Time complexity O(nlgn) 
 
-// 71. Tree to Doubly LinkedList
+/* 71. Tree to Doubly LinkedList
 
      3
    /
@@ -13,6 +13,15 @@
 意思是返回一个递增list，1的right是2，left是3， 2的left是1，right是3,3的left是2，right是 1.
 我用inorder获得递增序列然后设置left与right的node。返回1这个结点。. from: 1point3acres.com/bbs 
 follow up如何不先获得序列，直接在traverse的时候获得结果。follow up没回答出来。
+*/
+
+
+
+
+
+
+
+
 
 /*
  * Convert the tree into double LinkedList, in the format of sort
