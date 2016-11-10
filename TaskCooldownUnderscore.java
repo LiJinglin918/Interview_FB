@@ -1,3 +1,4 @@
+// 53. Tasks With Cooldown with underscore   两种返回。一个string一个list
 /*
 # Tasks: 1, 1, 2, 1. 
 # Recovery interva (cooldown): 2
@@ -15,12 +16,21 @@
 # Recovery interval (cooldown): 6
 # Output: 18  (1 2 3 4 5 6 _ _ 2 _ 4 _ 6 1 _ 2 _ 4)
 */ 
+http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=188881&extra=page%3D2%26filter%3Dsortid%26sortid%3D311%26searchoption%5B3090%5D%5Bvalue%5D%3D1%26searchoption%5B3090%5D%5Btype%5D%3Dradio%26searchoption%5B3046%5D%5Bvalue%5D%3D2%26searchoption%5B3046%5D%5Btype%5D%3Dradio%26sortid%3D311
+*/
 
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 /*
  * 此题挺巧妙的。return a string list. The cooldown is the circle number
@@ -51,5 +61,56 @@ public class TasksCircleCooldown {
 			j++;
 		}
 		return res;
+	}
+	
+	
+/*================================================================================================*/
+	
+	
+	/*
+	 * return string
+	 * 1. use hashmap to map the task to the excute time.
+	 * 2. When traverse the new char, time++
+	 * 3. if the time of certain task is too far from the excute time (time - hm.get(missions[i]) > k), a new task was put into the hashmap
+	 * 4. calculate the gap, then append '_' to the stringbuilder
+	 * 5. calculate the new time for the new task. 
+	 */
+	
+	public String Printer2(String input, int k) {
+		if (input.length() <= 1)
+			return input;
+		StringBuilder res = new StringBuilder();
+		
+		// use a hashmap to map the tasks to the excute time
+		HashMap<Character, Integer> missionToTime = new HashMap<>();
+		
+		// use variable time to store the current excute time (pointer)
+		int time = 0;
+		char[] missions = input.toCharArray();
+		
+		// traverse the missions array, one char increase one time
+		for (int i = 0; i < missions.length; i++) {
+			time++;
+			
+			// if the hashmap doesn't contains char || the certain task's excute time is too long, put a new task into the hashmap
+			if (!missionToTime.containsKey(missions[i]) || time - missionToTime.get(missions[i]) > k) {
+				missionToTime.put(missions[i], time);
+			}
+			
+			// append the '_', according to the gap
+			else {
+				int gap = k - (time - missionToTime.get(missions[i]) - 1);
+				while (gap > 0) {
+					res.append('_');
+					gap--;
+				}
+				
+				// if the hashmap contains the certain char, recalculate the time and put it into hashmap
+				time = k + missionToTime.get(missions[i]) + 1;
+				missionToTime.put(missions[i], time);
+			}
+			res.append(missions[i]);
+		}
+		return res.toString();
 	}
 }
