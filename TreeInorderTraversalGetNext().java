@@ -1,4 +1,4 @@
-// 第一个方法是用已给的下述构造函数。第二个方法是LC原题。
+// 第一个是创建getNext()。第二个方法是LC原题。
 /* 
 27. Binary Tree Inorder Traversal
 class Node {Node left, Node right, Node parent}
@@ -15,7 +15,8 @@ Node getNext (Node current) {
 // if node.parent.right = node(node is the right child of its parent), go up and 
 // search ancester if any ancester is the left child of its parent, return parent
 // else return null
-'Time complexity:O(1) in average, worst O(h), space complexity: O(1)' (BT Inorder parent)
+// Time complexity:O(1) in average, worst O(h), space complexity: O(1)' (BT Inorder parent)
+
 class BTInroder {
     public TreeNodeWithParent findNext(TreeNodeWithParent node) {
         if (node == null) {
@@ -58,6 +59,10 @@ class TreeNodeWithParent {
 
 }
 
+
+/*======================================================================================================================*/
+
+
 /*
 Given a binary tree, return the inorder traversal of its nodes' values.
 For example:
@@ -98,6 +103,7 @@ public class Solution {
         }
     }
     
+    // the second method, use the stack.
     public List<Integer> inorderTraversal2(TreeNode root) {
 		List<Integer> res = new ArrayList<>();
 		if (root == null)
