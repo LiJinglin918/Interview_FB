@@ -1,36 +1,85 @@
 // 43. Print Binary Tree Vertical
 // use a hashmap to record the column
 // Time complexity: O(n) - n nodes, Space complexity: O(n)
-public List<List<Integer>> verticalOrder(TreeNode root) {
-    List<List<Integer>> result = new ArrayList<>();
-    if (root == null) {
-        return result;
-    }
-    HashMap<Integer, List<Integer>> colToVertical = new HashMap<>();
-    HashMap<TreeNode, Integer> nodeToCol = new HashMap<>();
-    Queue<TreeNode> level = new LinkedList<>();
-    int mostLeft = 0;
-    level.offer(root);
-    nodeToCol.put(root, 0);
-    while (!level.isEmpty()) {
-        TreeNode node = level.poll();
-        int curCol = nodeToCol.get(node);
-        mostLeft = Math.min(mostLeft, curCol);
-        if (!colToVertical.containsKey(curCol)) {
-            colToVertical.put(curCol, new ArrayList<Integer>());
-        }
-        colToVertical.get(curCol).add(node.val);
-        if (node.left != null) {
-            level.offer(node.left);
-            nodeToCol.put(node.left, curCol - 1);
-        }
-        if (node.right != null) {
-            level.offer(node.right);
-            nodeToCol.put(node.right, curCol + 1);
-        }
-    }
-    while (colToVertical.containsKey(mostLeft)) {
-        result.add(colToVertical.get(mostLeft++));
-    }
-    return result;
+
+
+
+
+
+
+
+
+
+
+/*
+ * 1. use a hashmap to map the col index to the integer value of root
+ * 2. another hashmap to map the node to its col index. root's col index = 0; left branch is negative, right is positive
+ * 3. use a queue to store the node
+ * 4. use the mostLeft to store the smallest col index
+ * 5. from the smallest col index, print all node.value
+ */
+
+import java.util.*;
+public class PrintBinaryTreeVertical {
+	public List<List<Integer>> verticalOrder(TreeNode root) {
+		List<List<Integer>> res = new ArrayList<>();
+		if (root == null)
+			return res;
+		
+		// One hashmap to map the col index to the integer value
+		HashMap<Integer, List<Integer>> colToValue = new HashMap<>();
+		
+		// One hashmap to map the treenode to the col index
+		HashMap<TreeNode, Integer> nodeToCol = new HashMap<>();
+		
+		// Queue used to iterate nodes
+		Queue<TreeNode> level = new LinkedList<>();
+		
+		// mostLeft is a pointer, pointing to the smallest col index
+		int mostLeft = 0;
+	
+		level.add(root);
+		nodeToCol.put(root, 0);
+		
+		// traverse the queue, put the values at same level into hashmap
+		while (!level.isEmpty()) {
+			TreeNode node = level.poll();
+			int curCol = nodeToCol.get(node);
+			
+			// use mostLeft to calculate (count) the most negative col index
+			mostLeft = Math.min(mostLeft, curCol);
+			
+			// put the value with the same col index together
+			if (!colToValue.containsKey(curCol)) {
+				colToValue.put(curCol, new ArrayList<Integer>());
+			}
+			colToValue.get(curCol).add(node.val);
+			
+			// add the left branch with the negative col index. i.e. -1, -2, -3...
+			if(node.left != null) {
+				level.add(node.left);
+				nodeToCol.put(node.left, curCol - 1);
+			}
+			
+			// add the left branch with the negative col index. i.e. 1, 2, 3...
+			if (node.right != null) {
+				level.add(node.right);
+				nodeToCol.put(node.right, curCol + 1);
+			}
+		}
+		
+		// print the node.value according to the col index
+		while (colToValue.containsKey(mostLeft)) {
+			res.add(colToValue.get(mostLeft++));
+		}
+		return res;
+	}
+	public class TreeNode {
+		int val;
+		TreeNode left;
+		TreeNode right;
+		TreeNode (int x) {
+			val = x;
+		}
+	}
 }
