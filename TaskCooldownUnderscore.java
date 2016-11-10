@@ -113,3 +113,37 @@ public class TasksCircleCooldown {
 		return res.toString();
 	}
 }
+
+/*=========================================================================================================================================*/
+
+
+// 只需返回一共多少时间。integer
+//29. 工作的调度，是个面经题，有些变种，只要求出给定tasks的工作总时间，在小哥提示下做了优化到O(n). Follow up是如何schedule这些工作，这样最后的工作总时间最少。我说了一种greedy的算法，就是相同task相隔约长约好。但是不太对，小哥说其实是一旦数量最多的task cooldown时间到了，就schedule这个task。问了我大概怎么实现，就结束了。
+// http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=198026&extra=page%3D1%26filter%3Dsortid%26sortid%3D311%26searchoption%5B3090%5D%5Bvalue%5D%3D1%26searchoption%5B3090%5D%5Btype%5D%3Dradio%26searchoption%5B3046%5D%5Bvalue%5D%3D2%26searchoption%5B3046%5D%5Btype%5D%3Dradio%26sortid%3D311
+//mission order , same task cannot be called in a period  (missions, task, cd)
+
+import java.util.*;
+public class TasksMissionCooldownTotalTime {
+	public int missionTotalTime (int[] mission, int n) {
+		if (mission.length == 0)
+			return 0;
+		HashMap<Integer, Integer> hm = new HashMap<>();
+		int time = 0;
+		for (int i = 0; i < mission.length; i++) {
+			time++;
+			if (!hm.containsKey(mission[i])) {
+				hm.put(mission[i], time);
+			}
+			else {
+				if (time - hm.get(mission[i]) > n) {
+					hm.put(mission[i], time);
+				}
+				else {
+					time = n + hm.get(mission[i]) + 1;
+					hm.put(mission[i], time);
+				}
+			}
+		}
+		return time;
+	}
+}
