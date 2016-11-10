@@ -55,7 +55,7 @@ private List<String> findPath(TreeNode root) {
         TreeNode node = pair.node;
         String path = pair.path + "->" + Integer.toString(node.val);
         if (node.left == null && node.right == null) {
-            result.add(path.substring(2));
+            result.add(path.substring(2));			// remove "->"
         }
         if (node.left != null) {
             stack.push(new Pair(node.left, path));
