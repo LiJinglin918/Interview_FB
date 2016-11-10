@@ -5,6 +5,26 @@ http://www.1point3acres.com/bbs/forum.php?mod=viewthread&tid=199553&extra=page%3
 // 第一个方法是返回等差数列的长度。第二个方法是返回整个等差数列。
 
 // 返回等差数列的长度。
+
+// LC 的原题 arithmetic slices I/II
+
+public class Solution {
+    public int numberOfArithmeticSlices(int[] A) {
+    	int res = 0;
+    	int[] dp = new int[A.length];
+    	for (int i = 2; i < A.length; i++) {
+    		if (A[i] - A[i - 1] == A[i - 1] - A[i - 2])
+    			dp[i] = dp[i - 1] + 1;
+    		res += dp[i];
+    	}
+    	return res;
+    }
+}
+
+
+
+/*=====================================================================================================*/
+
 public class Solution {
 	public int findLongestArithmeticProgression(int[] input) {
         if (input.length <= 2) {
@@ -44,6 +64,11 @@ public class Solution {
         return maxLen;
     }
 }
+
+
+
+/*===========================================================================================================*/
+
 
 // 如果要输出这个等差数列结果。
 public List<Integer> printLongest(int[] input) {
