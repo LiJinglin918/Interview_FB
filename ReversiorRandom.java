@@ -15,6 +15,10 @@
 // For points index smaller k, if we eventually choose this point, 
 // no points can replace it, so the possibility is (k / k + 1) * (k + 1 / k + 2) * ......* (n - 1 / n) = (k / n)
 
+
+// 最后算概率可以参考： http://www.cnblogs.com/HappyAngel/archive/2011/02/07/1949762.html
+
+
 class Sample {
     public void sample(int[][] input, int k) {
         Point[] points = new Point[k];
@@ -43,4 +47,12 @@ class Sample {
             index++;
         }
     }
+    public class Point {
+		int x;
+		int y;
+		Point (int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
 }
