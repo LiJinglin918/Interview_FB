@@ -13,7 +13,7 @@ public class Solution {
 			return res;
 		PriorityQueue<Point> pq = new PriorityQueue<>(k, new Comparator<Point>() {
 			public int compare(Point o1, Point o2) {
-				return distance(o1) - distance(o2);
+				return distance(o2) - distance(o1);
 			}
 		});
 		for (Point point : points) {
