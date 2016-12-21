@@ -14,13 +14,8 @@
 20161108
 // 76. Paint House 	有关iterator
 // 75. FindSmallPathTree	理解不了。
-// 68. Contact Group Email  需要花时间看一下。
 
-
-20161109
-// 66. Minimum size of subarray 的2d array. 题目理解不清楚。以后碰到题目再说。
 
 20161110
 
-// 14. Read N Characters Given Read 4 看不懂
 // 7. KnightInChest 	没看懂题目
