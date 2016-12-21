@@ -22,7 +22,7 @@
 // if it does, which means this email maps to other people. lets call him A
 // So we go to check personToRoot, if A maps to another root,
 // which means the person we meet should also maps to this root
-// then we check aother mails of this person, if other mail maps to another person B
+// then we check other mails of this person, if other mail maps to another person B
 // this person should also maps to B's root, which means A's root should also be B's root,
 // So we change A's root's root to B's root(Other people in A's group still point to A's root, but A's root point to B's root)
 // For example, 1 - {x, y, z} 2 - {a, b}, 3 - {x} 4 - {x, a}
@@ -33,50 +33,82 @@
 // and find out that a -> 2, so  4's root 1's root should be 2,
 // that is 1 -> 2
 // in the end we have 1 -> 2, 2 -> 2, 3 -> 1, 4 -> 2
-// So the gourp is [1, 2, 3, 4]
+// So the group is [1, 2, 3, 4]
 
 /* Time complexity: O(nklgn) - n person and k emails in average, 
  findRoot, act like find node in a tree - O(lgn)
  Space complexity: O(nk)' */
 
-class Contact {
-    public List<List<Integer>> contactGroup(HashMap<Integer, String[]> contact) {
-        HashMap<String, Integer> emailToPerson = new HashMap<>();
-        HashMap<Integer, Integer> personToRoot = new HashMap<>();
-        for (int person : contact.keySet()) {
-            personToRoot.put(person, person);
-            int curRoot = person;
-            for (String email : contact.get(person)) {
-                if (!emailToPerson.containsKey(email)) {
-                    emailToPerson.put(email, person);
-                    continue;
-                }
-                int newRoot = emailToPerson.get(email);
-                newRoot = findRoot(personToRoot, newRoot);
-                if (newRoot != curRoot) {
-                    personToRoot.put(curRoot, newRoot);
-                    curRoot = newRoot;
-                }
-            }
-        }
-        HashMap<Integer, List<Integer>> groups = new HashMap<>();
-        List<List<Integer>> result = new ArrayList<>();
-        for (int person : personToRoot.keySet()) {
-            int root = findRoot(personToRoot, person);
-            if (!groups.containsKey(root)) {
-                groups.put(root, new ArrayList<Integer>());
-            }
-            groups.get(root).add(person);
-        }
-        for (int group : groups.keySet()) {
-            result.add(groups.get(group));
-        }
-        return result;
-    }
-    private int findRoot(HashMap<Integer, Integer> personToRoot, int root) {
-        while (personToRoot.get(root) != root) {
-            root = personToRoot.get(root);
-        }
-        return root;
-    }
+
+import java.util.*;
+public class ContactGroup {
+	public static void main(String[] args) {
+		String[] a = {"x","y","z"};
+		String[] b = {"x"};
+		String[] c = {"a","b"};
+		String[] d = {"y", "z"};
+		String[] e = {"b"};
+		String[] f = {"m"};
+		String[] g = {"t","b"};
+		
+		ContactGroup test = new ContactGroup();
+		
+		HashMap<Integer, String[]> contact = new HashMap<>();
+		contact.put(1, a);
+		contact.put(2, b);
+		contact.put(3, c);
+		contact.put(4, d);
+		contact.put(5, e);
+		contact.put(6, f);
+		contact.put(7, g);
+		
+		System.out.println(test.contactGroup(contact));
+		
+	}
+	public List<List<Integer>> contactGroup(HashMap<Integer, String[]> contact) {
+		HashMap<String, Integer> emailToPerson = new HashMap<>();
+		HashMap<Integer, Integer> personToRoot = new HashMap<>();
+		for (int person : contact.keySet()) {
+			personToRoot.put(person, person);
+
+			for (String email : contact.get(person)) {
+				if (!emailToPerson.containsKey(email)) {
+					emailToPerson.put(email, person);
+				}
+				else {
+					// 每次找根，加到原先的根上。
+					int root = emailToPerson.get(email);
+					root = findRoot(personToRoot, root);
+					
+					if (root != person) {
+						personToRoot.put(root, person);
+					}
+				}
+			}
+		}
+		// 有了根，遍历之前的contact找到每一个人的根(key)，加入每一个人到value中。
+		HashMap<Integer, List<Integer>> groups = new HashMap<>();
+		for (int person : personToRoot.keySet()) {
+			int root = findRoot(personToRoot, person);
+			if (!groups.containsKey(root)) {
+				groups.put(root, new ArrayList<>());
+			}
+			groups.get(root).add(person);
+		}
+		
+		// 结果。groups中每一个value都是一组。
+		List<List<Integer>> res = new ArrayList<>();
+		for (int group : groups.keySet()) {
+			res.add(groups.get(group));
+		}
+		return res;		
+	}
+	
+	// find method in UnionFind
+	public int findRoot(HashMap<Integer, Integer> personToRoot, int root) {
+		while (personToRoot.get(root) != root) {
+			root = personToRoot.get(root);
+		}
+		return root;
+	}
 }
