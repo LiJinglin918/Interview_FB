@@ -10,11 +10,8 @@
 // 84. Most Frequent In Intervals 没看懂。
 // 78. JoinLinkedListIterator 设计题。
 
-
 20161108
 // 76. Paint House 	有关iterator
-// 75. FindSmallPathTree	理解不了。
-
 
 20161110
 
