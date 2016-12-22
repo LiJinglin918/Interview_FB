@@ -90,7 +90,7 @@ public class FourNumberPairs {
 		List<List<int[]>> res = new ArrayList<>();
 		for (int sum : sumToPair.keySet()) {
 			List<int[]> pairs = sumToPair.get(sum).pairs;
-			/ If there is more than 1 candidate, 排列组合
+			// If there is more than 1 candidate, 排列组合
 			if (pairs.size() >= 2) {						
 				List<int[]> list = new ArrayList<>();
 				for (int i = 0; i < pairs.size() - 1; i++) {
