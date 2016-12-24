@@ -12,6 +12,10 @@ Given binary tree
       4   5    
 Returns [4, 5, 3], [2], [1].
 
+
+要求一层一层剥洋葱。
+Ref: http://www.programcreek.com/2014/07/leetcode-find-leaves-of-binary-tree-java/
+
 */
 
 import java.util.*;
@@ -36,3 +40,4 @@ public class FindLeaves {
 		return currDepth;
 	}
 }
+
