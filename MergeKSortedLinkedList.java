@@ -14,6 +14,46 @@ Merge k sorted linked lists and return it as one sorted list. Analyze and descri
 // PQ: 一个基于优先级堆的无界优先级队列。优先级队列的元素按照其自然顺序进行排序，或者根据构造队列时提供的 Comparator 进行排序
 // follow up: 给的不是list, 而是每个list的iterator.
 
+
+// define a class ArrayContainer, sorted. 
+// this class has int[], 一行一行算。
+class ArrayContainer implements Comparable<ArrayContainer> {
+	int[] arr;
+	int index;
+	ArrayContainer(int[] arr, int index) {
+		this.arr = arr;
+		this.index = index;
+	}
+	public int compareTo(ArrayContainer o) {
+		return this.arr[this.index] - o.arr[o.index];
+	}
+
+
+public int[] mergeKSortedArray(int[][] arr) {
+	PriorityQueue<ArrayContainer> q = new PriorityQueue<>();
+	
+	int count = 0;
+	for (int i = 0; i < arr.length; i++) {
+		q.add(new ArrayContainer(arr[i], 0));
+		count += arr[i].length;
+	}
+	int res[] = new int[count];
+	
+	int i = 0;
+	while (!q.isEmpty()) {
+		ArrayContainer temp = q.poll();
+		res[i++] = temp.arr[temp.index];
+		
+		if (temp.index < temp.arr.length - 1) {
+			q.add(new ArrayContainer(temp.arr, temp.index + 1));
+		}
+	}
+	return res;
+}
+
+/*---------输入的是arr[][], 返回的是arr[]----------------------------------------------------------*/
+	
+	
 public class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0)
